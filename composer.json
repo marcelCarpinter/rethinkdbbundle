@@ -1,0 +1,16 @@
+{
+    "name": "mcarpinter/rethink-db",
+    "type": "symfony-bundle",
+    "autoload": {
+        "psr-4": {
+            "Mcarpinter\\RethinkDb\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "marcelCarpinter",
+            "email": "marcel.carpinter.1995@gmail.com"
+        }
+    ],
+    "require": {}
+}
