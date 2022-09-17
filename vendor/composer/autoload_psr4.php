@@ -6,5 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Symfony\\Bridge\\PhpUnit\\' => array($vendorDir . '/symfony/phpunit-bridge'),
+    'Mcarpinter\\RethinkDb\\Tests\\' => array($baseDir . '/tests'),
     'Mcarpinter\\RethinkDb\\' => array($baseDir . '/src'),
 );

@@ -6,14 +6,31 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit2e5cb04cb375a1485f8d31613b837d96
 {
+    public static $files = array (
+        '92c8763cd6170fce6fcfe7e26b4e8c10' => __DIR__ . '/..' . '/symfony/phpunit-bridge/bootstrap.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Bridge\\PhpUnit\\' => 23,
+        ),
         'M' => 
         array (
+            'Mcarpinter\\RethinkDb\\Tests\\' => 27,
             'Mcarpinter\\RethinkDb\\' => 21,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Symfony\\Bridge\\PhpUnit\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/phpunit-bridge',
+        ),
+        'Mcarpinter\\RethinkDb\\Tests\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/tests',
+        ),
         'Mcarpinter\\RethinkDb\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',

@@ -6,11 +6,18 @@
             "Mcarpinter\\RethinkDb\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Mcarpinter\\RethinkDb\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "marcelCarpinter",
             "email": "marcel.carpinter.1995@gmail.com"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "symfony/phpunit-bridge": "^6.1"
+    }
 }
