@@ -3,12 +3,14 @@
     "type": "symfony-bundle",
     "autoload": {
         "psr-4": {
-            "Mcarpinter\\RethinkDb\\": "src/"
+            "MCarpinter\\RethinkDb\\": "src/"
         }
+    },
+    "require": {
     },
     "autoload-dev": {
         "psr-4": {
-            "Mcarpinter\\RethinkDb\\Tests\\": "tests/"
+            "MCarpinter\\RethinkDb\\Tests\\": "tests/"
         }
     },
     "authors": [
