@@ -1,9 +1,8 @@
 <?php
 
-use MCarpinter\Rethinkdb\RethinkDbBundle;
+use MCarpinter\RethinkDb\RethinkDbBundle;
 use PHPUnit\Framework\TestCase;
 
 class RethinkDbTest extends TestCase
 {
-
 }
