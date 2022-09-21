@@ -1,6 +1,6 @@
 <?php
 
-namespace MCarpinter\Rethinkdb\DependencyInjection;
+namespace MCarpinter\RethinkDb\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

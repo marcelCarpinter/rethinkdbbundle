@@ -1,6 +1,6 @@
 <?php
 
-namespace MCarpinter\Rethinkdb;
+namespace MCarpinter\RethinkDb;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
