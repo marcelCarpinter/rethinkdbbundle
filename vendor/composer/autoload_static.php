@@ -15,10 +15,14 @@ class ComposerStaticInit2e5cb04cb375a1485f8d31613b837d96
         array (
             'Symfony\\Bridge\\PhpUnit\\' => 23,
         ),
+        'P' => 
+        array (
+            'Psr\\Http\\Message\\' => 17,
+        ),
         'M' => 
         array (
-            'Mcarpinter\\RethinkDb\\Tests\\' => 27,
-            'Mcarpinter\\RethinkDb\\' => 21,
+            'MCarpinter\\RethinkDb\\Tests\\' => 27,
+            'MCarpinter\\RethinkDb\\' => 21,
         ),
     );
 
@@ -27,11 +31,15 @@ class ComposerStaticInit2e5cb04cb375a1485f8d31613b837d96
         array (
             0 => __DIR__ . '/..' . '/symfony/phpunit-bridge',
         ),
-        'Mcarpinter\\RethinkDb\\Tests\\' => 
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'MCarpinter\\RethinkDb\\Tests\\' => 
         array (
             0 => __DIR__ . '/../..' . '/tests',
         ),
-        'Mcarpinter\\RethinkDb\\' => 
+        'MCarpinter\\RethinkDb\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

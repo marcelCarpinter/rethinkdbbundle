@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Symfony\\Bridge\\PhpUnit\\' => array($vendorDir . '/symfony/phpunit-bridge'),
-    'Mcarpinter\\RethinkDb\\Tests\\' => array($baseDir . '/tests'),
-    'Mcarpinter\\RethinkDb\\' => array($baseDir . '/src'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'MCarpinter\\RethinkDb\\Tests\\' => array($baseDir . '/tests'),
+    'MCarpinter\\RethinkDb\\' => array($baseDir . '/src'),
 );
