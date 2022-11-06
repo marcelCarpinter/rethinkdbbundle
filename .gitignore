@@ -3,3 +3,4 @@ phpunit.xml
 /tests/cache
 /vendor
 .phpunit.result.cache
+/vendor/
