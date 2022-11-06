@@ -74,12 +74,19 @@ class RethinkDb implements RethinkInterface
     }
 
     /**
+     * Creates a new database. Returns true on success. False on failure
      * @param string $name
-     * @return Database
+     * @return bool
      */
-    public function dbCreate(string $name): Database
+    public function dbCreate(string $name): bool
     {
-        return $this->builder->database()->dbCreate($name);
+        try{
+            $this->builder->database()->dbCreate($name)->run();
+            return true;
+        }
+        catch (ConnectionException $e){
+            return false;
+        }
     }
 
     /**
