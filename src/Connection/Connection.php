@@ -381,7 +381,7 @@ class Connection implements ConnectionInterface, ConnectionCursorInterface
 
         if ($response->getType() === ResponseType::RUNTIME_ERROR) {
             throw new ConnectionException(
-                'Runtime error: ' . $response->getData()[0] . ', jsonQuery: ' . json_encode($message)
+                'Runtime error: ' . $response->getData() . ', jsonQuery: ' . json_encode($message)
             );
         }
     }
