@@ -39,7 +39,11 @@ class RethinkDb implements RethinkInterface
         $this->builder = new Builder($this);
     }
 
-    public function setConnection($name){
+    /**
+     * @param string $name
+     * @throws ConnectionException
+     */
+    public function setConnection(string $name){
         $this->connection = $this->registry->getConnection($name);
         try{
             $this->connection()->connect();
@@ -50,9 +54,11 @@ class RethinkDb implements RethinkInterface
     }
 
     /**
+     * @param string $connectionName
+     * @param string $dbName
      * @throws ConnectionException
      */
-    public function setConnectionOptions($connectionName, $dbName){
+    public function setConnectionOptions(string $connectionName, string $dbName){
         $options = new Options([
             'hostname' => 'rethinkdb', //make value to be on settings
             'port' => 28015, //amek value to be on settings

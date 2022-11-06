@@ -30,4 +30,10 @@ interface RethinkInterface
     public function row(?string $value = null): Row;
 
     public function dbExists(string $name): bool;
+
+    public function connectionExists(string $name): string;
+
+    public function setConnection(string $name);
+
+    public function setConnectionOptions(string $connectionName, string $dbName);
 }
