@@ -36,12 +36,13 @@ class RethinkDb implements RethinkInterface
     {
         $options = new Options([
             'hostname' => 'rethinkdb',
-            'port' => 8080,
+            'port' => 28015,
             'default_db' => 'test',
             'user' => 'admin',
             'password' => '',
             'timeout' => 5,
             'timeout_stream' => 10,
+            'dbname' => 'test'
         ]);
         $this->registry = new Registry(
             $connections = [
@@ -54,7 +55,7 @@ class RethinkDb implements RethinkInterface
                 $this->connection()->connect();
             }
             catch(ConnectionException $e){
-                throw new Exception(json_encode([$e->getMessage(), $this->connection() ]), $e->getCode());
+                throw new Exception($e->getMessage(), $e->getCode());
             }
         }
         catch (ConnectionException $e) {
@@ -91,11 +92,11 @@ class RethinkDb implements RethinkInterface
     }
 
     /**
-     * @return Database
+     * @return array|string
      */
-    public function dbList(): Database
+    public function dbList(): array|string
     {
-        return $this->builder->database()->dbList();
+        return $this->builder->database()->dbList()->run()->getData();
     }
 
     /**
@@ -142,15 +143,8 @@ class RethinkDb implements RethinkInterface
         return $this->builder->row($value);
     }
 
-    /**
-     * Returns several paragraphs of random ipsum text.
-     *
-     * @param int $count
-     * @return string
-     */
-    public function getParagraphs(int $count = 3): string
+    public function dbExists(string $name): bool
     {
-
-        return "Paragraph";
+        return in_array($name, $this->dbList());
     }
 }

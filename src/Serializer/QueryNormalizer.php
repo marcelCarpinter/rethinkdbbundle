@@ -32,10 +32,15 @@ class QueryNormalizer extends AbstractNormalizer
         }
 
         if ($object instanceof OptionsInterface) {
-            return (object) $object->jsonSerialize();
+            return $object->jsonSerialize();
         }
 
-        return $this->serializer->normalize($object->jsonSerialize(), $format, $context);
+        try{
+            return $this->serializer->normalize($object->jsonSerialize(), $format, $context);
+        }
+        catch (\Exception $e){
+            return [];
+        }
     }
 
     public function supportsNormalization($data, $format = null)

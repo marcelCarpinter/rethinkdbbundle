@@ -88,7 +88,6 @@ class Handshake implements HandshakeInterface
                 try {
                     $msg = $this->nextMessage($handshakeResponse);
                 } catch (Exception $e) {
-                    $stream->close();
                     throw $e;
                 }
 
@@ -148,8 +147,7 @@ class Handshake implements HandshakeInterface
         $this->state = 1;
 
         return
-            $binaryVersion
-            . json_encode(
+            $binaryVersion  . json_encode(
                 [
                     'protocol_version' => $this->protocolVersion,
                     'authentication_method' => 'SCRAM-SHA-256',
@@ -170,6 +168,11 @@ class Handshake implements HandshakeInterface
         }
 
         $json = json_decode($response, true);
+        if(!$json){
+            throw new Exception(
+                'No response from server'
+            );
+        }
         if ($json && $json['success'] === false) {
             throw new Exception('Handshake failed: '.$json["error"]);
         }

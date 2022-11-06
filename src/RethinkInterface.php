@@ -21,11 +21,13 @@ interface RethinkInterface
 
     public function dbDrop(string $name): Database;
 
-    public function dbList(): Database;
+    public function dbList(): array|string;
 
     public function desc($key): Ordening;
 
     public function asc($key): Ordening;
 
     public function row(?string $value = null): Row;
+
+    public function dbExists(string $name): bool;
 }
