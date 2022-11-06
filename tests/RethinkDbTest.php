@@ -4,11 +4,19 @@ namespace MCarpinter\RethinkDb\Tests;
 
 use MCarpinter\RethinkDb\RethinkDbBundle;
 use \PHPUnit\Framework\TestCase;
+use Mockery;
 
 class RethinkDbTest extends TestCase
 {
-    public function testGetWords()
+    protected function tearDown(): void
     {
-        $this->assertTrue(true);
+        Mockery::close();
+    }
+
+    protected function setUp(): void
+    {
+        Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
+
+        parent::setUp();
     }
 }
