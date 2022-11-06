@@ -17,7 +17,7 @@ interface RethinkInterface
 
     public function db(): Database;
 
-    public function dbCreate(string $name): Database;
+    public function dbCreate(string $name): bool;
 
     public function dbDrop(string $name): Database;
 
