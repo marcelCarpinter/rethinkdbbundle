@@ -59,7 +59,7 @@ class RegistryTest extends \MCarpinter\RethinkDb\Tests\RethinkDbTest
                 'fooConnection' => $options,
             ]
         );
-
+        $this->expectException(ConnectionException::class);
         $registry->addConnection('fooConnection', $options);
     }
 
@@ -70,6 +70,7 @@ class RegistryTest extends \MCarpinter\RethinkDb\Tests\RethinkDbTest
     public function testIfExceptionThrownOnMissingConnection(): void
     {
         $registry = new Registry([]);
+        $this->expectException(ConnectionException::class);
         $registry->getConnection('fooConnection');
     }
 }
