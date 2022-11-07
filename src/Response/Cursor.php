@@ -59,7 +59,7 @@ class Cursor implements \Iterator, \Countable
         $this->seek();
 
         if (!$this->valid()) {
-            return;
+            return null;
         }
 
         if ($this->response->isAtomic()) {
