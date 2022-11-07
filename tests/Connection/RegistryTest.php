@@ -9,7 +9,7 @@ class RegistryTest extends \MCarpinter\RethinkDb\Tests\RethinkDbTest
 {
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      * @throws ConnectionException
      */
     public function testIfRegistryGetsConstructedWithConnections(): void
