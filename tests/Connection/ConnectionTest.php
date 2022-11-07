@@ -1,5 +1,7 @@
 <?php
 
+use MCarpinter\RethinkDb\Connection\ConnectionException;
+
 class ConnectionTest extends ConnectionTestCase
 {
     /**
@@ -11,8 +13,6 @@ class ConnectionTest extends ConnectionTestCase
     }
 
     /**
-     * @expectedException \TBolier\RethinkQL\Connection\ConnectionException
-     * @expectedExceptionMessage Test exception
      * @return void
      * @throws ConnectionException
      */
@@ -21,7 +21,7 @@ class ConnectionTest extends ConnectionTestCase
         $this->handshake->shouldReceive('hello')->once()->andThrow(
             new ConnectionException('Test exception')
         );
-
+        $this->expectException(ConnectionException::class);
         $this->connection->connect();
     }
 
