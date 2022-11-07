@@ -54,12 +54,12 @@ class Cursor implements \Iterator, \Countable
     /**
      * @throws \Exception
      */
-    public function current()
+    public function current(): mixed
     {
         $this->seek();
 
         if (!$this->valid()) {
-            return;
+            return null;
         }
 
         if ($this->response->isAtomic()) {
@@ -102,7 +102,7 @@ class Cursor implements \Iterator, \Countable
         $this->addResponse($this->connection->rewindFromCursor($this->message));
     }
 
-    public function count()
+    public function count(): int
     {
         return $this->size;
     }

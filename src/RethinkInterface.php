@@ -17,7 +17,7 @@ interface RethinkInterface
 
     public function db(): Database;
 
-    public function dbCreate(string $name): Database;
+    public function dbCreate(string $name): bool;
 
     public function dbDrop(string $name): Database;
 
@@ -30,4 +30,10 @@ interface RethinkInterface
     public function row(?string $value = null): Row;
 
     public function dbExists(string $name): bool;
+
+    public function connectionExists(string $name): string;
+
+    public function setConnection(string $name);
+
+    public function setConnectionOptions(string $connectionName, string $dbName);
 }

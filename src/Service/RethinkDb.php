@@ -25,7 +25,9 @@ class RethinkDb implements RethinkInterface
      */
     private $connection;
 
-
+    /**
+     * @var Registry
+     */
     public $registry;
 
     /**
@@ -34,35 +36,44 @@ class RethinkDb implements RethinkInterface
      */
     public function __construct()
     {
-        $options = new Options([
-            'hostname' => 'rethinkdb',
-            'port' => 28015,
-            'default_db' => 'test',
-            'user' => 'admin',
-            'password' => '',
-            'timeout' => 5,
-            'timeout_stream' => 10,
-            'dbname' => 'test'
-        ]);
-        $this->registry = new Registry(
-            $connections = [
-                'default_connection' => $options
-            ]
-        );
-        try {
-            $this->connection = $this->registry->getConnection('default_connection');
-            try{
-                $this->connection()->connect();
-            }
-            catch(ConnectionException $e){
-                throw new Exception($e->getMessage(), $e->getCode());
-            }
+        $this->builder = new Builder($this);
+    }
+
+    /**
+     * @param string $name
+     * @throws ConnectionException
+     */
+    public function setConnection(string $name){
+        $this->connection = $this->registry->getConnection($name);
+        try{
+            $this->connection()->connect();
         }
-        catch (ConnectionException $e) {
+        catch(ConnectionException $e){
             throw new Exception($e->getMessage(), $e->getCode());
         }
+    }
 
-        $this->builder = new Builder($this);
+    /**
+     * @param string $connectionName
+     * @param string $dbName
+     * @throws ConnectionException
+     */
+    public function setConnectionOptions(string $connectionName, string $dbName){
+        $options = new Options([
+            'hostname' => 'rethinkdb', //make value to be on settings
+            'port' => 28015, //amek value to be on settings
+            'default_db' => $dbName,
+            'dbname' => $dbName,
+            'user' => 'admin', //make value to be on settings
+            'password' => '', //make value to be on settings
+            'timeout' => 5,
+            'timeout_stream' => 10,
+        ]);
+        $this->registry = new Registry(
+            [
+                $connectionName => $options
+            ]
+        );
     }
 
     /**
@@ -74,12 +85,19 @@ class RethinkDb implements RethinkInterface
     }
 
     /**
+     * Creates a new database. Returns true on success. False on failure
      * @param string $name
-     * @return Database
+     * @return bool
      */
-    public function dbCreate(string $name): Database
+    public function dbCreate(string $name): bool
     {
-        return $this->builder->database()->dbCreate($name);
+        try{
+            $this->builder->database()->dbCreate($name)->run();
+            return true;
+        }
+        catch (ConnectionException $e){
+            return false;
+        }
     }
 
     /**
@@ -143,8 +161,20 @@ class RethinkDb implements RethinkInterface
         return $this->builder->row($value);
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     */
     public function dbExists(string $name): bool
     {
         return in_array($name, $this->dbList());
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function connectionExists(string $name): string{
+        return $this->registry->hasConnection($name);
     }
 }
