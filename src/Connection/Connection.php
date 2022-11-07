@@ -244,7 +244,7 @@ class Connection implements ConnectionInterface, ConnectionCursorInterface
     }
 
     /**
-     * @throws \Exception
+     * @throws ConnectionException
      */
     public function writeQuery(int $token, MessageInterface $message): int
     {
@@ -258,8 +258,8 @@ class Connection implements ConnectionInterface, ConnectionCursorInterface
 
         try {
             $request = $this->querySerializer->serialize($message, 'json');
-        } catch (\Exception $e) {
-            throw new Exception('Serializing query message failed.', $e->getCode(), $e);
+        } catch (ConnectionException $e) {
+            throw new ConnectionException('Serializing query message failed.', $e->getCode(), $e);
         }
 
         $requestSize = pack('V', \strlen($request));
