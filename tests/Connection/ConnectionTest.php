@@ -144,7 +144,7 @@ class ConnectionTest extends ConnectionTestCase
         $res = $this->connection->server();
 
         $this->assertEquals(QueryType::SERVER_INFO, $res->getType());
-        $this->assertInternalType('array', $res->getData());
+        $this->assertTrue(is_array($res->getData()));
         $this->assertEquals(['yolo'], $res->getData());
     }
 
