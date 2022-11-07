@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace MCarpinter\RethinkDb\Connection;
 
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 use MCarpinter\RethinkDb\Connection\Socket\Socket;
 use MCarpinter\RethinkDb\Connection\Socket\Handshake;
 use MCarpinter\RethinkDb\Serializer\QueryNormalizer;
 use MCarpinter\RethinkDb\Types\VersionDummy\Version;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class Registry implements RegistryInterface
 {
@@ -19,9 +19,12 @@ class Registry implements RegistryInterface
     private $connections;
 
     /**
+     * @param array|null $connections
      * @throws ConnectionException
      */
-    public function __construct(array $connections = null)
+    public function __construct(
+        array $connections = null
+    )
     {
         if ($connections) {
             foreach ($connections as $name => $options) {
