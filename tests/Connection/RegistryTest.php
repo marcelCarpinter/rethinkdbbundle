@@ -4,8 +4,9 @@ use MCarpinter\RethinkDb\Connection\Connection;
 use MCarpinter\RethinkDb\Connection\ConnectionException;
 use MCarpinter\RethinkDb\Connection\Options;
 use MCarpinter\RethinkDb\Connection\Registry;
+use MCarpinter\RethinkDb\Tests\RethinkDbTestCase;
 
-class RegistryTest extends \MCarpinter\RethinkDb\Tests\RethinkDbTest
+class RegistryTest extends RethinkDbTestCase
 {
     /**
      * @return void

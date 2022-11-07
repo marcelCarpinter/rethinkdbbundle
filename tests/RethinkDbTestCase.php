@@ -6,7 +6,7 @@ use MCarpinter\RethinkDb\RethinkDbBundle;
 use \PHPUnit\Framework\TestCase;
 use Mockery;
 
-class RethinkDbTest extends TestCase
+class RethinkDbTestCase extends TestCase
 {
     protected function tearDown(): void
     {
