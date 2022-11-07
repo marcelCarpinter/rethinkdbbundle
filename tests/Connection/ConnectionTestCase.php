@@ -6,6 +6,7 @@ use MCarpinter\RethinkDb\Connection\Connection;
 use MCarpinter\RethinkDb\Connection\ConnectionInterface;
 use MCarpinter\RethinkDb\Connection\Socket\HandshakeInterface;
 use MCarpinter\RethinkDb\Tests\RethinkDbTestCase;
+use Mockery;
 use Mockery\MockInterface;
 use Psr\Http\Message\StreamInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -89,7 +90,7 @@ abstract class ConnectionTestCase extends RethinkDbTestCase
     {
         $this->querySerializer->shouldReceive('serialize')->atLeast()->andReturn("['serialized': true]");
 
-        $buffer = new stdClass();
+        $buffer = new \stdClass();
         $this->catchStreamWrite($buffer);
 
         if ($response) {
@@ -101,10 +102,10 @@ abstract class ConnectionTestCase extends RethinkDbTestCase
     }
 
     /**
-     * @param stdClass $buffer
-     * @return stdClass
+     * @param \stdClass $buffer
+     * @return \stdClass
      */
-    protected function catchStreamWrite(stdClass $buffer)
+    protected function catchStreamWrite(\stdClass $buffer)
     {
         $this->stream->shouldReceive('write')->andReturnUsing(function ($string) use ($buffer) {
             $buffer->data = $string;
@@ -119,7 +120,7 @@ abstract class ConnectionTestCase extends RethinkDbTestCase
      * @param int $bytes
      * @param stdClass $buffer
      */
-    protected function catchStreamRead(int $bytes, stdClass $buffer): void
+    protected function catchStreamRead(int $bytes, \stdClass $buffer): void
     {
         $this->stream->shouldReceive('read')->once()->with($bytes)->andReturnUsing(function ($bytes) use (&$buffer) {
             $data = '';
