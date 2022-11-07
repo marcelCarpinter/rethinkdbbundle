@@ -22,7 +22,7 @@ class Options implements OptionsInterface
         return $this;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         if (empty($this->db)) {
             return [];
