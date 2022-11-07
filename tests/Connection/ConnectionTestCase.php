@@ -1,5 +1,7 @@
 <?php
 
+namespace MCarpinter\RethinkDb\Tests\Connection;
+
 use MCarpinter\RethinkDb\Connection\Connection;
 use MCarpinter\RethinkDb\Connection\ConnectionInterface;
 use MCarpinter\RethinkDb\Connection\Socket\HandshakeInterface;

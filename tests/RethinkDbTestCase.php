@@ -2,7 +2,6 @@
 
 namespace MCarpinter\RethinkDb\Tests;
 
-use MCarpinter\RethinkDb\RethinkDbBundle;
 use \PHPUnit\Framework\TestCase;
 use Mockery;
 

@@ -1,12 +1,14 @@
 <?php
 
+namespace MCarpinter\RethinkDb\Tests\Connection;
+
 use MCarpinter\RethinkDb\Connection\ConnectionException;
 use MCarpinter\RethinkDb\Message\MessageInterface;
 use MCarpinter\RethinkDb\Response\Cursor;
 use MCarpinter\RethinkDb\Response\ResponseInterface;
 use MCarpinter\RethinkDb\Types\Query\QueryType;
 use MCarpinter\RethinkDb\Types\Response\ResponseType;
-use Mockery;
+use \Mockery;
 
 class ConnectionTest extends ConnectionTestCase
 {
