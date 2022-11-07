@@ -1,6 +1,12 @@
 <?php
 
 use MCarpinter\RethinkDb\Connection\ConnectionException;
+use MCarpinter\RethinkDb\Message\MessageInterface;
+use MCarpinter\RethinkDb\Response\Cursor;
+use MCarpinter\RethinkDb\Response\ResponseInterface;
+use MCarpinter\RethinkDb\Types\Query\QueryType;
+use MCarpinter\RethinkDb\Types\Response\ResponseType;
+use Mockery;
 
 class ConnectionTest extends ConnectionTestCase
 {
@@ -26,19 +32,22 @@ class ConnectionTest extends ConnectionTestCase
     }
 
     /**
-     * @expectedException \TBolier\RethinkQL\Connection\ConnectionException
-     * @expectedExceptionMessage No open stream, please connect first
+     * @throws Exception
      */
     public function testQueryWithoutConnection(): void
     {
-        $this->connection->writeQuery(1223456789, \Mockery::mock(MessageInterface::class));
+        $this->connection->writeQuery(1223456789, Mockery::mock(MessageInterface::class));
+        $this->expectException(ConnectionException::class);
     }
 
+    /**
+     * @throws ConnectionException
+     */
     public function testExpr()
     {
         $this->connect();
 
-        $response = \Mockery::mock(ResponseInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive('getType')->atLeast()->andReturn(ResponseType::SUCCESS_ATOM);
 
         $this->setExpectations($response);
@@ -50,10 +59,10 @@ class ConnectionTest extends ConnectionTestCase
     {
         $this->connect();
 
-        $message = \Mockery::mock(MessageInterface::class);
+        $message = Mockery::mock(MessageInterface::class);
         $message->shouldReceive('setOptions')->once()->andReturn();
 
-        $response = \Mockery::mock(ResponseInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive('getType')->atLeast()->andReturn(ResponseType::SUCCESS_ATOM);
 
         $this->setExpectations($response);
@@ -72,10 +81,10 @@ class ConnectionTest extends ConnectionTestCase
     {
         $this->connect();
 
-        $message = \Mockery::mock(MessageInterface::class);
+        $message = Mockery::mock(MessageInterface::class);
         $message->shouldReceive('setOptions')->once()->andReturn();
 
-        $response = \Mockery::mock(ResponseInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive('getType')->atLeast()->andReturn(ResponseType::SUCCESS_PARTIAL);
         $response->shouldReceive('getData')->atLeast()->andReturn(['yolo']);
         $response->shouldReceive('isAtomic')->once()->andReturn(true);
@@ -84,7 +93,7 @@ class ConnectionTest extends ConnectionTestCase
 
         try {
             $this->assertInstanceOf(Cursor::class, $this->connection->run($message, false));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail($e->getMessage());
         }
     }
@@ -96,19 +105,19 @@ class ConnectionTest extends ConnectionTestCase
     {
         $this->connect();
 
-        $response = \Mockery::mock(ResponseInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive('getType')->atLeast()->andReturn(ResponseType::SUCCESS_SEQUENCE);
         $response->shouldReceive('getData')->atLeast()->andReturn(['yolo']);
         $response->shouldReceive('isAtomic')->once()->andReturn(true);
 
         $this->setExpectations($response);
 
-        $message = \Mockery::mock(MessageInterface::class);
+        $message = Mockery::mock(MessageInterface::class);
         $message->shouldReceive('setOptions')->once()->andReturn();
 
         try {
             $this->assertInstanceOf(Cursor::class, $this->connection->run($message, false));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail($e->getMessage());
         }
     }
@@ -120,7 +129,7 @@ class ConnectionTest extends ConnectionTestCase
     {
         $this->connect();
 
-        $response = \Mockery::mock(ResponseInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive('getType')->atLeast()->andReturn(ResponseType::SERVER_INFO);
         $response->shouldReceive('getData')->atLeast()->andReturn(['yolo']);
 
@@ -140,14 +149,14 @@ class ConnectionTest extends ConnectionTestCase
     {
         $this->connect();
 
-        $message = \Mockery::mock(MessageInterface::class);
+        $message = Mockery::mock(MessageInterface::class);
         $message->shouldReceive('setOptions')->once()->andReturn();
 
         $this->setExpectations();
 
         try {
             $this->assertEmpty($this->connection->runNoReply($message));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail($e->getMessage());
         }
 
@@ -166,7 +175,7 @@ class ConnectionTest extends ConnectionTestCase
 
         try {
             $this->connection->close(false);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail($e->getMessage());
         }
 
@@ -180,7 +189,7 @@ class ConnectionTest extends ConnectionTestCase
     {
         $this->connect();
 
-        $response = \Mockery::mock(ResponseInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive('getType')->atLeast()->andReturn(ResponseType::WAIT_COMPLETE);
 
         $this->setExpectations($response);
@@ -189,7 +198,7 @@ class ConnectionTest extends ConnectionTestCase
 
         try {
             $this->connection->close(true);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail($e->getMessage());
         }
 
@@ -203,7 +212,7 @@ class ConnectionTest extends ConnectionTestCase
     {
         try {
             $this->connection->use('test');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail($e->getMessage());
         }
 
