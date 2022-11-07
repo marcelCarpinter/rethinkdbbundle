@@ -10,7 +10,7 @@
     "require": {
         "psr/http-message": "^1.0",
         "mockery/mockery": "^1.5",
-        "symfony/serializer": "^6.1",
+        "symfony/serializer": "6.1.0",
         "symfony/property-access": "^6.1"
     },
     "autoload-dev": {
