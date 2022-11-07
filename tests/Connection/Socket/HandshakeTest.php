@@ -2,7 +2,7 @@
 
 namespace MCarpinter\RethinkDb\Tests\Connection\Socket;
 
-use _PHPStan_3bfe2e67c\Nette\Neon\Exception;
+use MCarpinter\RethinkDb\Connection\Socket\Exception;
 use MCarpinter\RethinkDb\Connection\Socket\Handshake;
 use MCarpinter\RethinkDb\Tests\RethinkDbTestCase;
 use Mockery\MockInterface;
@@ -28,12 +28,16 @@ class HandshakeTest extends RethinkDbTestCase
      */
     public function testExceptionThrownOnStreamNotWritable(): void
     {
-        $stream = \Mockery::mock(StreamInterface::class);
-        $stream->shouldReceive('isWritable')->atLeast()->andReturn(false);
-        $stream->shouldReceive('close');
+        try{
+            $stream = \Mockery::mock(StreamInterface::class);
+            $stream->shouldReceive('isWritable')->atLeast()->andReturn(false);
+            $stream->shouldReceive('close');
 
-        $this->handshake->hello($stream);
-        $this->expectException(Exception::class);
+            $this->handshake->hello($stream);
+        }
+        catch (Exception $e){
+            $this->assertEquals("Not connected", $e->getMessage());
+        }
     }
 
     /**
@@ -41,14 +45,19 @@ class HandshakeTest extends RethinkDbTestCase
      */
     public function testExceptionThrownOnError(): void
     {
-        $stream = \Mockery::mock(StreamInterface::class);
-        $stream->shouldReceive('isWritable')->atLeast()->andReturn(true);
-        $stream->shouldReceive('close');
-        $stream->shouldReceive('write');
-        $stream->shouldReceive('getContents')->atLeast()->andReturn('ERROR: Foobar');
+        try{
+            $stream = \Mockery::mock(StreamInterface::class);
+            $stream->shouldReceive('isWritable')->atLeast()->andReturn(true);
+            $stream->shouldReceive('close');
+            $stream->shouldReceive('write');
+            $stream->shouldReceive('getContents')->atLeast()->andReturn('ERROR: Foobar');
 
-        $this->handshake->hello($stream);
-        $this->expectException(Exception::class);
+            $this->handshake->hello($stream);
+            $this->expectException(Exception::class);
+        }
+        catch (Exception $e){
+            $this->assertEquals("Foobar", $e->getMessage());
+        }
     }
 
     /**
@@ -56,14 +65,19 @@ class HandshakeTest extends RethinkDbTestCase
      */
     public function testExceptionThrownOnVerifyProtocolWithError(): void
     {
-        $stream = \Mockery::mock(StreamInterface::class);
-        $stream->shouldReceive('isWritable')->atLeast()->andReturn(true);
-        $stream->shouldReceive('close');
-        $stream->shouldReceive('write');
-        $stream->shouldReceive('getContents')->atLeast()->andReturn('{"success":false, "error": "Foobar"}');
+        try{
+            $stream = \Mockery::mock(StreamInterface::class);
+            $stream->shouldReceive('isWritable')->atLeast()->andReturn(true);
+            $stream->shouldReceive('close');
+            $stream->shouldReceive('write');
+            $stream->shouldReceive('getContents')->atLeast()->andReturn('{"success":false, "error": "Foobar"}');
 
-        $this->handshake->hello($stream);
-        $this->expectException(Exception::class);
+            $this->handshake->hello($stream);
+            $this->expectException(Exception::class);
+        }
+        catch (Exception $e){
+            $this->assertEquals("Handshake failed: Foobar", $e->getMessage());
+        }
     }
 
     /**
@@ -71,15 +85,20 @@ class HandshakeTest extends RethinkDbTestCase
      */
     public function testExceptionThrownOnInvalidProtocolVersion(): void
     {
-        $stream = \Mockery::mock(StreamInterface::class);
-        $stream->shouldReceive('isWritable')->atLeast()->andReturn(true);
-        $stream->shouldReceive('close');
-        $stream->shouldReceive('write');
-        $stream->shouldReceive('getContents')->atLeast()
-            ->andReturn('{"success":true, "max_protocol_version": 1, "min_protocol_version": 1}');
+        try{
+            $stream = \Mockery::mock(StreamInterface::class);
+            $stream->shouldReceive('isWritable')->atLeast()->andReturn(true);
+            $stream->shouldReceive('close');
+            $stream->shouldReceive('write');
+            $stream->shouldReceive('getContents')->atLeast()
+                ->andReturn('{"success":true, "max_protocol_version": 1, "min_protocol_version": 1}');
 
-        $this->handshake->hello($stream);
-        $this->expectException(Exception::class);
+            $this->handshake->hello($stream);
+            $this->expectException(Exception::class);
+        }
+        catch (Exception $e){
+            $this->assertEquals("Unsupported protocol version.", $e->getMessage());
+        }
     }
 
 
@@ -88,14 +107,19 @@ class HandshakeTest extends RethinkDbTestCase
      */
     public function testExceptionThrownOnProtocolError(): void
     {
-        /** @var MockInterface $stream */
-        $stream = \Mockery::mock(StreamInterface::class);
-        $stream->shouldReceive('isWritable')->atLeast()->andReturn(true);
-        $stream->shouldReceive('close');
-        $stream->shouldReceive('write');
-        $stream->shouldReceive('getContents')->atLeast()->andReturn('ERROR: Woops!');
+        try{
+            /** @var MockInterface $stream */
+            $stream = \Mockery::mock(StreamInterface::class);
+            $stream->shouldReceive('isWritable')->atLeast()->andReturn(true);
+            $stream->shouldReceive('close');
+            $stream->shouldReceive('write');
+            $stream->shouldReceive('getContents')->atLeast()->andReturn('ERROR: Woops!');
 
-        $this->handshake->hello($stream);
-        $this->expectException(Exception::class);
+            $this->handshake->hello($stream);
+            $this->expectException(Exception::class);
+        }
+        catch (Exception $e){
+            $this->assertEquals("Woops!", $e->getMessage());
+        }
     }
 }
